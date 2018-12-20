@@ -32,12 +32,12 @@
 	pstmt = conn.prepareStatement(sql);
 	rs = pstmt.executeQuery();
 
-	int resNum = -1;
+	String resNum = "";
 	while (rs.next()) {
 		if (key) break;
 		DBid = rs.getString(1);
 		DBpwd = rs.getString(2);
-		resNum = rs.getInt(3);
+		resNum = rs.getString(3);
 		if (id.equals(DBid)) {
 			key = true;
 			if (passwd.equals(DBpwd)) {
@@ -46,8 +46,8 @@
 				response.sendRedirect("resMain.jsp");
 				%>
 				<script>
-					alert('로그인 인증되었습니다.');
-					location.href = 'resMain.jsp';
+					alert('로그인 인증되었습니다.')
+					location.href = 'resMain.jsp'
 				</script>
 				<%
 			}

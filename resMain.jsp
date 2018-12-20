@@ -9,9 +9,9 @@
 </head>
 <body>
 <%
-int restaurant = -1;
+String restaurant = "";
 try {
-	restaurant = (int)session.getAttribute("restaurant");
+	restaurant = (String)session.getAttribute("restaurant");
 }
 catch (Exception e) {
 	%>
@@ -32,7 +32,7 @@ catch (Exception e) {
 	conn = DriverManager.getConnection(url,user,pswd);
  
 	String name = null;
-	sql = String.format("SELECT resName FROM RESTAURANT WHERE resNum = %d ", restaurant);
+	sql = String.format("SELECT resName FROM RESTAURANT WHERE resNum = %s ", restaurant);
 	pstmt = conn.prepareStatement(sql);
 	rs = pstmt.executeQuery();
 	

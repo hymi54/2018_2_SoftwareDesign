@@ -10,19 +10,23 @@
 <body>
 <h1>로그아웃 페이지</h1>
 <%
-int restaurant = -1;
+
+String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+PreparedStatement pstmt;
+ResultSet rs;
+Connection conn;
+String sql;
+String user = "hymi54";
+String pswd = "br0409";
+Class.forName("oracle.jdbc.driver.OracleDriver");
+conn = DriverManager.getConnection(url,user,pswd);
+
+String restaurant = "";
 try {
-	try {
-		restaurant = (int)session.getAttribute("restaurant");	
-	}
-	catch (Exception e1) {
-		%>
-		<script>
-		alert('로그인 해주세요.')
-		location.href = 'login.jsp'
-		</script>
-		<%
-	}
+	restaurant = (String)session.getAttribute("restaurant");	
+	sql = String.format("update curSeat set maxseat = 0, curseat = 0 where resnum = %s", restaurant);
+	pstmt = conn.prepareStatement(sql);
+	rs = pstmt.executeQuery();
 	session.invalidate();
 }
 catch (Exception e) {

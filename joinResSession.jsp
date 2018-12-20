@@ -30,12 +30,8 @@
 	String id = request.getParameter("id");
 	String pwd = request.getParameter("passwd");
 	String resName = new String(request.getParameter("resName").getBytes("8859_1"), "UTF-8");
-	String temp = request.getParameter("resNum");
-	int resNum = -1;
-	if(!temp.isEmpty() || temp.length() == 10) {
-		resNum = Integer.parseInt(temp);
-	}
-	else{
+	String resNum = request.getParameter("resNum");
+	if(resNum.isEmpty() || resNum.length() != 10) {
 		%>
 		<script>
 		alert('잘못된 사업자등록번호 형식 입니다.')
@@ -56,14 +52,14 @@
 	
 	String dup_id = null;
 	String dup_name = null;
-	int dup_num = -1;
+	String dup_num = "";
 	sql = "SELECT RID, resname, resnum FROM RESTAURANT";
 	pstmt = conn.prepareStatement(sql);
 	rs = pstmt.executeQuery();
 	while (rs.next()) {
 		dup_id = rs.getString(1);
 		dup_name = rs.getString(2);
-		dup_num = rs.getInt(3);
+		dup_num = rs.getString(3);
 		if (id.equals(dup_id)) {
 			%>
 			<script>
@@ -84,7 +80,7 @@
 			key = false;
 			break;
 		}
-		if(resNum == dup_num) {
+		if(resNum.equals(dup_num)) {
 			%>
 			<script>
 			alert('중복된 사업자등록번호 입니다.')
@@ -113,7 +109,7 @@
 		<%
 		key = false;
 	}
-	if (resNum < 0) {
+	if (resNum.isEmpty()) {
 		%>
 		<script>
 		alert('사업자등록번호를 쓰지 않았습니다.')
@@ -123,7 +119,10 @@
 		key = false;
 	}
 	if (key) {
-		sql = String.format("INSERT INTO RESTAURANT VALUES('%s', '%s', '%s', '%d')", id, pwd, resName, resNum);
+		sql = String.format("INSERT INTO RESTAURANT VALUES('%s', '%s', '%s', '%s')", id, pwd, resName, resNum);
+		pstmt = conn.prepareStatement(sql);
+		pstmt.executeQuery();
+		sql = String.format("insert into curseat values('%s', 0, 0)", resNum);
 		pstmt = conn.prepareStatement(sql);
 		pstmt.executeQuery();
 	}

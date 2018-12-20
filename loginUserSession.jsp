@@ -45,8 +45,8 @@
 				response.sendRedirect("userMain.jsp");
 				%>
 				<script>
-					alert('로그인 인증되었습니다.');
-					location.href = 'userMain.jsp';
+					alert('로그인 인증되었습니다.')
+					location.href = 'userMain.jsp'
 				</script>
 				<%
 			}

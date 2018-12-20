@@ -4,14 +4,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>좌석 현황 업데이트</title>
+	<title>좌석 현황 업데이트</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+
+    <!-- Bootstrap core CSS-->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-2dark">
 <%
-	int restaurant = -1;
+	String restaurant = "";
 	try {
-		restaurant = (int)session.getAttribute("restaurant");
+		restaurant = (String)session.getAttribute("restaurant");
 	}
 	catch (Exception e) {
 		%>
@@ -32,13 +46,34 @@
 	Class.forName("oracle.jdbc.driver.OracleDriver");
 	conn = DriverManager.getConnection(url,user,pswd);
 	
-	String tempmax = null;
-	int max;
-	int cur;
-	sql = String.format("SELECT resName FROM RESTAURANT WHERE resNum = %d ", restaurant);
+	String temp = request.getParameter("max");
+	int max = Integer.parseInt(temp);
+	if(max<=0){
+		%>
+		<script>
+		alert('0 또는 음수는 총 좌석 수가 될 수 없습니다.')
+		location.href = 'updateSeat.jsp'
+		</script>
+		<%
+	}
+	temp = request.getParameter("cur");
+	int cur = Integer.parseInt(temp);
+	if(cur>max){
+		%>
+		<script>
+		alert('좌석 현황은 총 좌석 수보다 클 수 없습니다.')
+		location.href = 'updateSeat.jsp'
+		</script>
+		<%
+	}
+	sql = String.format("update curSeat set maxSeat = %d, curSeat = %d WHERE resNum = %s ", max, cur, restaurant);
 	pstmt = conn.prepareStatement(sql);
 	rs = pstmt.executeQuery();
-
+	conn.close();
 	%>
+	<script>
+	alert('업데이트 완료')
+	location.href = 'updateSeat.jsp'
+	</script>
 </body>
 </html>

@@ -9,9 +9,9 @@
 </head>
 <body>
 <%
-	int restaurant = -1;
+	String restaurant = "";
 	try {
-		restaurant = (int)session.getAttribute("restaurant");
+		restaurant = (String)session.getAttribute("restaurant");
 	}
 	catch (Exception e) {
 		%>
@@ -34,7 +34,7 @@
 	
 	String name = null;
 	int max = 0;
-	sql = String.format("SELECT r.resName, c.maxSeat FROM RESTAURANT r, curSeat c WHERE r.resNum = c.resNum and c.resNum = %d ", restaurant);
+	sql = String.format("SELECT r.resName, c.maxSeat FROM RESTAURANT r, curSeat c WHERE r.resNum = c.resNum and c.resNum = %s ", restaurant);
 	pstmt = conn.prepareStatement(sql);
 	rs = pstmt.executeQuery();
 	while (rs.next()) {
@@ -45,8 +45,9 @@
 	<h3><%=name %> 좌석현황 업데이트 페이지</h3><hr>
 	<form action = "updateSession.jsp" method = "post">
 	전체 좌석 : <input type = "number" name = "max" value = "<%=max %>"><br>
-	좌석 현황 : <input type = "number" name = "cur"><br>
-	<input type = "submit" value = "업데이트">
+	좌석 현황 : <input type = "number" name = "cur" value = "0"><br>
+	<input type = "submit" value = "업데이트"><br><br>
 	</form>
+	<button onclick="location='resMain.jsp'">메인페이지로</button>
 </body>
 </html>

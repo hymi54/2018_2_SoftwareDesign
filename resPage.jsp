@@ -18,10 +18,9 @@
 	String pswd = "br0409";
 	Class.forName("oracle.jdbc.driver.OracleDriver");
 	conn = DriverManager.getConnection(url,user,pswd);
-	String temp = request.getParameter("rnum");
-	int rnum = Integer.parseInt(temp);
+	String rnum = request.getParameter("rnum");
 	
-	sql = String.format("SELECT resName FROM RESTAURANT WHERE resNum = %d ", rnum);
+	sql = String.format("SELECT resName FROM RESTAURANT WHERE resNum = %s ", rnum);
 	pstmt = conn.prepareStatement(sql);
 	rs = pstmt.executeQuery();
 	
@@ -32,7 +31,7 @@
 <h1><%=name %> 상세정보 페이지입니다.</h1>
 <hr>
 <%
-	sql = String.format("select menuName, menuPrice from resMenu WHERE resNum = %d ", rnum);
+	sql = String.format("select menuName, menuPrice from resMenu WHERE resNum = %s ", rnum);
 	pstmt = conn.prepareStatement(sql);
 	rs = pstmt.executeQuery();
 	%>
@@ -63,7 +62,7 @@
 			<th>총 좌석 수</th>
 		</tr>
 <%
-	sql = String.format("select maxSeat, curSeat from curSeat WHERE resNum = %d ", rnum);
+	sql = String.format("select maxSeat, curSeat from curSeat WHERE resNum = %s ", rnum);
 	pstmt = conn.prepareStatement(sql);
 	rs = pstmt.executeQuery();
 	

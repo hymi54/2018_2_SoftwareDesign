@@ -5,19 +5,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>식당 리스트</title>
+<title>퓨전</title>
 </head>
 <body>
-<h1>식당 리스트</h1>
-<strong>종류</strong>
-<table border = "1">
-<tr>
-<td><button onclick = "location.href = 'korRes.jsp'">한식</button></td>
-<td><button onclick = "location.href = 'chiRes.jsp'">중식</button></td>
-<td><button onclick = "location.href = 'japRes.jsp'">일식</button></td>
-<td><button onclick = "location.href = 'wesRes.jsp'">양식</button></td>
-<td><button onclick = "location.href = 'fusRes.jsp'">퓨전</button></td></tr>
-</table><hr>
+<h2>퓨전 리스트</h2>
 <%
 	String url = "jdbc:oracle:thin:@localhost:1521:orcl";
 	PreparedStatement pstmt;
@@ -29,7 +20,7 @@
 	Class.forName("oracle.jdbc.driver.OracleDriver");
 	conn = DriverManager.getConnection(url,user,pswd);
 	
-	sql = "select r.resNum, r.resName, listagg(m.menuName, ', ') within group (order by m.menuName) from restaurant r, resMenu m where r.resNum = m.resNum group by r.resNum,r.resName";
+	sql = "select r.resNum, r.resName, listagg(m.menuName, ', ') within group (order by m.menuName) from restaurant r, resMenu m where r.resNum = m.resNum and r.resType = 5 group by r.resNum,r.resName";
 	pstmt = conn.prepareStatement(sql);
 	rs = pstmt.executeQuery();
 	%>
@@ -40,8 +31,8 @@
 			<th>좌석 현황</th>
 		</tr>
 	<%
-	String name = null, menu = null, rnum = null;
-	int type = 0;
+	String name = null, menu = null, rnum = "";
+	int type;
 	while (rs.next()) {
 		rnum = rs.getString(1);
 		name = rs.getString(2);
