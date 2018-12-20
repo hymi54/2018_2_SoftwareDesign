@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>좌석현황 업데이트</title>
+<title>좌석 현황 업데이트</title>
 </head>
 <body>
 <%
@@ -32,21 +32,13 @@
 	Class.forName("oracle.jdbc.driver.OracleDriver");
 	conn = DriverManager.getConnection(url,user,pswd);
 	
-	String name = null;
-	int max = 0;
-	sql = String.format("SELECT r.resName, c.maxSeat FROM RESTAURANT r, curSeat c WHERE r.resNum = c.resNum and c.resNum = %d ", restaurant);
+	String tempmax = null;
+	int max;
+	int cur;
+	sql = String.format("SELECT resName FROM RESTAURANT WHERE resNum = %d ", restaurant);
 	pstmt = conn.prepareStatement(sql);
 	rs = pstmt.executeQuery();
-	while (rs.next()) {
-		name = rs.getString(1);
-		max = rs.getInt(2);
-	}
+
 	%>
-	<h3><%=name %> 좌석현황 업데이트 페이지</h3><hr>
-	<form action = "updateSession.jsp" method = "post">
-	전체 좌석 : <input type = "number" name = "max" value = "<%=max %>"><br>
-	좌석 현황 : <input type = "number" name = "cur"><br>
-	<input type = "submit" value = "업데이트">
-	</form>
 </body>
 </html>

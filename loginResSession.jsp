@@ -58,6 +58,7 @@
 	if (!key) { // 패스워드 못찾고 나왔을 때
 		out.println("아이디 없음<br>");
 	}
+	conn.close();
 %>
 </body>
 </html>

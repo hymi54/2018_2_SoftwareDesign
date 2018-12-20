@@ -39,9 +39,9 @@ catch (Exception e) {
 	while (rs.next()) {
 		name = rs.getString(1);
 	}
+	conn.close();
 %>
-<hr>
-<%=name %>손님 메인페이지입니다.<br>
+<h3><%=name %>님이 로그인하셨습니다.</h3><hr>
 <input type = "button" value = "로그아웃" onclick = "location.href = 'logout.jsp'">
 <input type = "button" value = "식당 리스트" onclick = "location.href = 'resList.jsp'"><br>
 </body>

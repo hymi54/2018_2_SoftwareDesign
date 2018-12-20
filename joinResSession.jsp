@@ -23,8 +23,8 @@
 	sql = "SELECT MAX(Cnumber) FROM CUSTOMER";
 	pstmt = conn.prepareStatement(sql);
 	rs = pstmt.executeQuery();
-	
 	while (rs.next()) number = rs.getInt(1) + 1;
+	
 	boolean key = true;
 	boolean key2 = true;
 	String id = request.getParameter("id");
