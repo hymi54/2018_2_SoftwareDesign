@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page language="java" import = "java.text.*, java.sql.*" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
-<title>¼Õ´Ô ¸ÞÀÎ ÆäÀÌÁö</title>
+<meta charset="UTF-8">
+<title>ì†ë‹˜ ë©”ì¸ íŽ˜ì´ì§€</title>
 </head>
 <body>
 <%
@@ -16,7 +16,7 @@ try {
 catch (Exception e) {
 	%>
 	<script>
-	alert('·Î±×ÀÎ ÇØÁÖ¼¼¿ä.')
+	alert('ë¡œê·¸ì¸ì„ í•˜ì‹­ì‹œì˜¤.')
 	location.href = 'login.jsp'
 	</script>
 	<%
@@ -41,9 +41,8 @@ catch (Exception e) {
 	}
 %>
 <hr>
-<%=name %>´ÔÀÌ ·Î±×ÀÎÇÏ¼Ì½À´Ï´Ù.<br>
-<input type = "button" value = "È¸¿øÁ¤º¸ ¼öÁ¤" onclick = "location.href = 'changeInfo.jsp'">
-<input type = "button" value = "·Î±×¾Æ¿ô" onclick = "location.href = 'logout.jsp'">
-<input type = "button" value = "°ú°Å ±¸¸Å³»¿ª È®ÀÎ" onclick = "location.href = 'previousPurchase.jsp'"><br>
+<%=name %>ì†ë‹˜ ë©”ì¸íŽ˜ì´ì§€ìž…ë‹ˆë‹¤.<br>
+<input type = "button" value = "ë¡œê·¸ì•„ì›ƒ" onclick = "location.href = 'logout.jsp'">
+<input type = "button" value = "ì‹ë‹¹ ë¦¬ìŠ¤íŠ¸" onclick = "location.href = 'resList.jsp'"><br>
 </body>
 </html>

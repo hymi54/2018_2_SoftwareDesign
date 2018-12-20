@@ -45,7 +45,6 @@
 		key = false;
 	}
 	
-	String dup_id = null;
 	if (id.isEmpty()) {
 		%>
 		<script>
@@ -54,15 +53,41 @@
 		</script>
 		<%
 	}
-	sql = "SELECT ID FROM CUSTOMER";
+	
+	String dup_id = null;
+	String dup_name = null;
+	int dup_num = -1;
+	sql = "SELECT RID, resname, resnum FROM RESTAURANT";
 	pstmt = conn.prepareStatement(sql);
 	rs = pstmt.executeQuery();
 	while (rs.next()) {
 		dup_id = rs.getString(1);
+		dup_name = rs.getString(2);
+		dup_num = rs.getInt(3);
 		if (id.equals(dup_id)) {
 			%>
 			<script>
 			alert('중복된 아이디 입니다.')
+			location.href = 'joinRestaurant.jsp'
+			</script>
+			<%
+			key = false;
+			break;
+		}
+		if(resName.equals(dup_name)) {
+			%>
+			<script>
+			alert('중복된 상호명 입니다.')
+			location.href = 'joinRestaurant.jsp'
+			</script>
+			<%
+			key = false;
+			break;
+		}
+		if(resNum == dup_num) {
+			%>
+			<script>
+			alert('중복된 사업자등록번호 입니다.')
 			location.href = 'joinRestaurant.jsp'
 			</script>
 			<%
@@ -98,9 +123,9 @@
 		key = false;
 	}
 	if (key) {
-		sql = String.format("INSERT INTO CUSTOMER VALUES('%s', '%s', '%s', '%d')", id, pwd, resName, resNum);
+		sql = String.format("INSERT INTO RESTAURANT VALUES('%s', '%s', '%s', '%d')", id, pwd, resName, resNum);
 		pstmt = conn.prepareStatement(sql);
-		pstmt.executeUpdate();
+		pstmt.executeQuery();
 	}
 	conn.close();
 	%>

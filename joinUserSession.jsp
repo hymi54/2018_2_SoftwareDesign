@@ -40,12 +40,12 @@
 		<%
 	}
 	
-	sql = "SELECT NICK FROM CUSTOMER";
+	sql = "SELECT Cid, NICK FROM CUSTOMER";
 	pstmt = conn.prepareStatement(sql);
 	rs = pstmt.executeQuery();
 	while (rs.next()) { // 아이디, 닉네임 중복체크
 		dup_id = rs.getString(1);
-		dup_nick = rs.getString(3);
+		dup_nick = rs.getString(2);
 		if(id.equals(dup_id)){
 			%>
 			<script>
@@ -86,16 +86,16 @@
 		key = false;
 	}
 	if (key) {
-		sql = String.format("INSERT INTO CUSTOMER VALUES('%s', '%s', '%s')", id, passwd, nick);
+		sql = String.format("INSERT INTO CUSTOMER VALUES('%d','%s', '%s', '%s')", number, id, passwd, nick);
 		pstmt = conn.prepareStatement(sql);
-		pstmt.executeUpdate();
+		pstmt.executeQuery();
 	}
 	
 	conn.close();
 	%>
 	<script>
 	alert('★★회원가입을 완료했습니다★★')
-	location.href = ''
+	location.href = 'login.jsp'
 	</script>
 </body>
 </html>
